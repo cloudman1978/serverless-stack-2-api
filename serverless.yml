@@ -27,7 +27,7 @@ provider:
   name: aws
   runtime: nodejs8.1
   stage: dev
-  region: us-east-1
+  region: eu-west-3
 
 # These environment variables are made available to our functions
 # under process.env.
@@ -125,3 +125,11 @@ resources:
   # Cognito
   - ${file(resources/cognito-user-pool.yml)}
   - ${file(resources/cognito-identity-pool.yml)}
+billing:
+    handler: billing.main
+    events:
+      - http:
+          path: billing
+          method: post
+          cors: true
+          authorizer: aws_iam
